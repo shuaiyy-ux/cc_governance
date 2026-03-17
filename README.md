@@ -22,29 +22,37 @@ Nothing is overwritten without explicit confirmation. If a proposed change confl
 
 ## Install
 
-**Claude Code**
+**Claude Code (recommended)**
 ```bash
-npx skills add shuaiyy-ux/cc_governance
+npx skills add shuaiyy-ux/cc_governance --agent claude-code
+```
+
+This installs to `.claude/skills/` in the current project directory, which is where Claude Code reads from.
+
+**Global install (available across all your projects)**
+```bash
+npx skills add shuaiyy-ux/cc_governance --agent claude-code --global
 ```
 
 **Manual**
 ```bash
-# Project-level (checked into your repo)
-cp -r cc_governance .claude/skills/
+# Clone and copy directly into Claude Code's skills directory
+git clone https://github.com/shuaiyy-ux/cc_governance.git
+cp -r cc_governance/cc-governance .claude/skills/
 
-# Personal (available across all your projects)
-cp -r cc_governance ~/.claude/skills/
+# Or global
+cp -r cc_governance/cc-governance ~/.claude/skills/
 ```
 
 **claude.ai**
 
-Settings → Features → Skills → upload `cc_governance.skill`
+Settings → Features → Skills → upload `cc-governance.skill`
 
 ---
 
 ## Usage
 
-Once installed, run `/cc_governance` in any Claude Code session, or just describe the problem — Claude will load the skill automatically when you mention issues with your setup.
+Once installed, run `/cc-governance` in any Claude Code session, or just describe the problem — Claude will load the skill automatically when you mention issues with your setup.
 
 Works on:
 - New projects with no Claude Code config yet
