@@ -7,6 +7,8 @@ description: >
   starting a new project that will use Claude Code, or when the user says things
   like "Claude keeps ignoring my rules", "context is getting messy", "my skills
   aren't triggering", or "set up my project for Claude Code".
+agents:
+  - claude-code
 ---
 
 # Claude Code Governance
@@ -86,18 +88,18 @@ Group issues by impact. Use this format:
 ```
 ## Audit Results
 
-### 🔴 Fix Now (breaks reliability)
+### Fix Now (breaks reliability)
 [issue] — [specific evidence from their files] — [one-line reason it matters]
 
-### 🟡 Structural Issues (degrades over time)
+### Structural Issues (degrades over time)
 [issue] — [specific evidence] — [one-line reason]
 
-### 🟢 Nice to Have (low priority)
+### Nice to Have (low priority)
 [issue] — [specific evidence] — [one-line reason]
 
 ---
 Which of these would you like me to address?
-You can say "all of them", "just the red ones", or pick by number.
+You can say "all of them", "just the critical ones", or pick by number.
 ```
 
 Be specific. Don't say "your CLAUDE.md is too long." Say:
@@ -149,8 +151,7 @@ Always wait for explicit confirmation before writing.
 Make only what was confirmed. After each change:
 - Read the file back to verify the edit landed correctly
 - Report what changed in one line
-- Note if anything downstream needs attention (e.g., "this skill's description
-  changed—if you have other skills that reference it, check those too")
+- Note if anything downstream needs attention
 
 If a change touches an existing section, preserve all surrounding content exactly.
 
