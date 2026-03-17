@@ -24,7 +24,7 @@ Nothing is overwritten without explicit confirmation. If a proposed change confl
 
 **Claude Code**
 ```bash
-npx skills add YOUR_USERNAME/cc-governance
+npx skills add shuaiyy-ux/cc-governance
 ```
 
 **Manual**
