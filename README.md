@@ -1,10 +1,10 @@
-# cc-governance
+# cc_governance
 
 A Claude Code skill that audits and fixes your agent configuration.
 
 Most Claude Code problems are not model problems — they are configuration problems. Context layering is wrong, CLAUDE.md has grown into a wiki nobody reads, skill descriptors are too vague to trigger reliably, hooks are doing things they shouldn't. These issues compound silently until the agent stops being useful.
 
-`cc-governance` scans your project, finds the specific issues, and walks you through fixing them. It shows you exactly what it wants to change before touching anything.
+`cc_governance` scans your project, finds the specific issues, and walks you through fixing them. It shows you exactly what it wants to change before touching anything.
 
 ---
 
@@ -24,27 +24,27 @@ Nothing is overwritten without explicit confirmation. If a proposed change confl
 
 **Claude Code**
 ```bash
-npx skills add shuaiyy-ux/cc-governance
+npx skills add shuaiyy-ux/cc_governance
 ```
 
 **Manual**
 ```bash
 # Project-level (checked into your repo)
-cp -r cc-governance .claude/skills/
+cp -r cc_governance .claude/skills/
 
 # Personal (available across all your projects)
-cp -r cc-governance ~/.claude/skills/
+cp -r cc_governance ~/.claude/skills/
 ```
 
 **claude.ai**
 
-Settings → Features → Skills → upload `cc-governance.skill`
+Settings → Features → Skills → upload `cc_governance.skill`
 
 ---
 
 ## Usage
 
-Once installed, run `/cc-governance` in any Claude Code session, or just describe the problem — Claude will load the skill automatically when you mention issues with your setup.
+Once installed, run `/cc_governance` in any Claude Code session, or just describe the problem — Claude will load the skill automatically when you mention issues with your setup.
 
 Works on:
 - New projects with no Claude Code config yet
