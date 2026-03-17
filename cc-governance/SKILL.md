@@ -1,12 +1,6 @@
 ---
 name: cc-governance
-description: >
-  Audit and improve Claude Code project configuration. Use this skill whenever
-  the user wants to check their Claude Code setup, fix issues with CLAUDE.md,
-  Skills, Hooks, context drift, or rules not being followed. Also trigger when
-  starting a new project that will use Claude Code, or when the user says things
-  like "Claude keeps ignoring my rules", "context is getting messy", "my skills
-  aren't triggering", or "set up my project for Claude Code".
+description: Audit and improve Claude Code project configuration. Use when checking CLAUDE.md, Skills, Hooks, context drift, rules not being followed, or setting up a new project for Claude Code.
 agents:
   - claude-code
 ---
@@ -38,13 +32,12 @@ CLAUDE.md                        (root contract)
 ```
 
 For each file found, read it fully before forming any opinion.
-For each file missing, note it but don't assume it's a problem yet—some are optional.
+For each file missing, note it but don't assume it's a problem yet — some are optional.
 
 Also run these diagnostic commands if in Claude Code:
-```
-/context    → reveals token breakdown; MCP overhead is often the hidden culprit
-/memory     → confirms which CLAUDE.md actually loaded
-```
+
+- `/context` reveals token breakdown; MCP overhead is often the hidden culprit
+- `/memory` confirms which CLAUDE.md actually loaded
 
 ---
 
@@ -83,66 +76,34 @@ Check each area. Collect evidence before scoring.
 
 ## Step 3: Present Findings
 
-Group issues by impact. Use this format:
+Group issues by impact. Use this structure:
 
-```
-## Audit Results
+**Fix Now** (breaks reliability)
+List each issue with the specific file and line reference, and one sentence on why it matters.
 
-### Fix Now (breaks reliability)
-[issue] — [specific evidence from their files] — [one-line reason it matters]
+**Structural Issues** (degrades over time)
+Same format.
 
-### Structural Issues (degrades over time)
-[issue] — [specific evidence] — [one-line reason]
+**Nice to Have** (low priority)
+Same format.
 
-### Nice to Have (low priority)
-[issue] — [specific evidence] — [one-line reason]
+Then ask: "Which of these would you like me to address? You can say all of them, just the critical ones, or pick by number."
 
----
-Which of these would you like me to address?
-You can say "all of them", "just the critical ones", or pick by number.
-```
-
-Be specific. Don't say "your CLAUDE.md is too long." Say:
-"Lines 45–89 of your CLAUDE.md contain API documentation that Claude can read
-directly from your codebase. Moving it to a skill would save ~30 lines of
-always-resident context."
+Be specific. Don't say "your CLAUDE.md is too long." Say: "Lines 45-89 of your CLAUDE.md contain API documentation that Claude can read directly from your codebase. Moving it to a skill would save around 30 lines of always-resident context."
 
 ---
 
 ## Step 4: Propose Changes (Before Touching Anything)
 
-For each confirmed issue, show the exact change first:
+For each confirmed issue, show the exact change first.
 
-**For additions** — show the block to be added and where:
-```
-I'll add this section to the end of your CLAUDE.md:
+**For additions** — describe the block to be added and where it goes, then ask: "Confirm? (yes / skip / modify)"
 
-## Compact Instructions
-When compressing, preserve in priority order:
-1. Architecture decisions
-2. Modified files and key changes
-3. Verification status (pass/fail)
-4. Open TODOs and rollback notes
+**For edits** — show a before/after comparison of only the affected lines, never the full file, then ask: "Confirm? (yes / skip / modify)"
 
-Confirm? (yes / skip / modify)
-```
+**For new files** — show the full content and explain why it doesn't conflict with the existing setup.
 
-**For edits** — show before/after diff, never the full file:
-```
-In your release-check skill, I'll change:
-
-BEFORE:
-description: Helps with releases
-
-AFTER:
-description: Use before cutting a release to verify build, tests, and changelog.
-
-Confirm? (yes / skip / modify)
-```
-
-**For new files** — show full content, explain why it doesn't conflict with existing setup.
-
-Always wait for explicit confirmation before writing.
+Always wait for explicit confirmation before writing anything.
 
 ---
 
@@ -160,28 +121,21 @@ If a change touches an existing section, preserve all surrounding content exactl
 ## Edge Cases to Handle Gracefully
 
 **New project, no Claude Code files yet:**
-Don't generate a full template. Ask what the project does and what the user wants
-Claude Code to help with. Build the minimal CLAUDE.md from that conversation.
-A CLAUDE.md that reflects the actual project is better than a complete one that doesn't.
+Don't generate a full template. Ask what the project does and what the user wants Claude Code to help with. Build the minimal CLAUDE.md from that conversation. A CLAUDE.md that reflects the actual project is better than a complete one that doesn't.
 
 **Existing project with working setup:**
-Err on the side of fewer suggestions. If something is working, don't fix it.
-Only surface issues with clear evidence of actual problems.
+Err on the side of fewer suggestions. If something is working, don't fix it. Only surface issues with clear evidence of actual problems.
 
 **User wants to batch-apply everything:**
-Still show the full list of changes before any write. Confirm once for the batch,
-then apply in order, reporting each change as it lands.
+Still show the full list of changes before any write. Confirm once for the batch, then apply in order, reporting each change as it lands.
 
 **Conflicting existing content:**
-Never silently overwrite. If a proposed addition conflicts with something already
-in the file, show both versions and ask the user which to keep.
+Never silently overwrite. If a proposed addition conflicts with something already in the file, show both versions and ask the user which to keep.
 
 ---
 
 ## What This Skill Does Not Do
 
-- Does not hardcode values like token limits or command syntax—these change with
-  Claude Code releases. If a specific number or command is needed, use web search
-  to verify the current behavior first.
+- Does not hardcode values like token limits or command syntax — these change with Claude Code releases. If a specific number or command is needed, use web search to verify the current behavior first.
 - Does not apply any change without explicit user confirmation.
 - Does not restructure or reformat files beyond the specific issue being addressed.
